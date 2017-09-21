@@ -1,0 +1,35 @@
+{
+  "name": "@fluentdevelopment/basiq-api",
+  "version": "0.0.1",
+  "description": "A NodeJS wrapper around the Basiq.io API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "prepublish": "npm run build",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "clean": "rimraf ./dist",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "OpenSource - Fluent Development <opensource@fluentdevelopment.com.au> (https://fluentdevelopment.com.au)",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "@types/rimraf": "^2.0.2",
+    "@types/typescript": "^2.0.0",
+    "rimraf": "^2.6.2",
+    "typescript": "^2.5.2"
+  },
+  "keywords": [
+    "basiq",
+    "basiq.io",
+    "api"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FluentDevelopment/basiq-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/FluentDevelopment/basiq-api/issues"
+  },
+  "homepage": "https://github.com/FluentDevelopment/basiq-api"
+}

@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "sourceMap": true,
+    "declaration": true,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "target": "es5",
+    "strict": true,
+    "module": "commonjs",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2016"
+    ]
+  },
+  "files": [
+    "lib/index.ts"
+  ]
+}
