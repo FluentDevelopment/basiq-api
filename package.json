@@ -14,10 +14,21 @@
   "author": "OpenSource - Fluent Development <opensource@fluentdevelopment.com.au> (https://fluentdevelopment.com.au)",
   "license": "BSD-2-Clause",
   "devDependencies": {
+    "@types/debug": "0.0.30",
+    "@types/jwt-decode": "^2.2.1",
     "@types/rimraf": "^2.0.2",
+    "@types/superagent": "^3.5.5",
     "@types/typescript": "^2.0.0",
+    "debug": "^3.0.1",
     "rimraf": "^2.6.2",
     "typescript": "^2.5.2"
+  },
+  "dependencies": {
+    "@types/superagent-prefix": "0.0.1",
+    "jwt-decode": "^2.2.0",
+    "superagent": "^3.6.0",
+    "superagent-prefix": "0.0.2",
+    "superagent-use": "^0.1.0"
   },
   "keywords": [
     "basiq",
