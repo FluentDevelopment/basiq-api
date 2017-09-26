@@ -154,6 +154,6 @@ export class Client {
       'Accept': 'application/json',
       'Authorization': (this.token ? `${this.token.token_type} ${this.token.access_token}` : ''),
     };
-    return Object.assign({}, config, { headers });
+    return Object.assign({}, { headers }, config);
   }
 }
