@@ -3,31 +3,40 @@
 
 [bio-api]: https://basiq.io/api/
 
-## Importing
-
-```javascript
-var Basiq = require('@fluentdevelopment/basiq-api');
-  // OR
-import { Basiq, BasiqAPIOptions, BasiqResponse } from '@fluentdevelopment/basiq-api';
-```
-
 ## Configuration
 
 The API key can be found on the [API Keys][dashboard] tab in the Basiq.io dashboard.
 
 [dashboard]: https://dashboard.basiq.io/
 
+## Require
+
 ```javascript
-const APIOptions = {
+var BasiqAPI = require('@fluentdevelopment/basiq-api').BasiqAPI;
+
+var apiOptions = {
   baseURL: 'https://au-api.basiq.io', // optional
   auth: {
     apiKey: 'abc123'
   }
-};
+}
 
-var basiq = Basiq(APIOptions);
-  // OR
-var basiq = new Basiq(APIOptions);
+var basiq = new BasiqAPI(apiOptions);
+```
+
+## Importing
+
+```javascript
+import { BasiqAPI, BasiqAPIOptions, BasiqResponse } from '@fluentdevelopment/basiq-api';
+
+const apiOptions: BasiqAPIOptions = {
+  baseURL: 'https://au-api.basiq.io', // optional
+  auth: {
+    apiKey: 'abc123'
+  }
+}
+
+const basiq: BasiqAPI = new BasiqAPI(apiOptions);
 ```
 
 ## API Overview
@@ -43,45 +52,69 @@ Every resource method returns a promise, which can be chained or used with async
 ```javascript
 basiq.accounts
   .list('123')
-  .then((res) => {
+  .then((res: BasiqResponse) => {
     return res.body;
   })
   ;
 
-
 // where supported
 async function getAccounts(connectionId) {
-  var resp = await basiq.accounts.list(connectionId);
+  var resp: BasiqResponse = await basiq.accounts.list(connectionId);
   return resp.body;
 }
-
-/**
-* Response object
-*
-* BasiqResponse {
-*    status: number;
-*    statusText: string;
-*    body: any;
-*    headers?: any;
-* }
-*/
-
 ```
 
 ### Available resources and methods
 
 * connections
-    * `create(options)`
-    * `refresh(connectionId)`
-    * `retrieve(connectionId)`
-    * `update(connectionId, options)`
-    * `delete(connectionId)`
+    * `create(options: ConnectionCreateOptions)`
+    * `refresh(connectionId: string)`
+    * `retrieve(connectionId: string)`
+    * `update(connectionId: string, options: ConnectionUpdateOptions)`
+    * `delete(connectionId: string)`
 * accounts
-    * `retrieve(connectionId, accountId)`
-    * `list(connectionId)`
+    * `retrieve(connectionId: string, accountId: string)`
+    * `list(connectionId:string)`
 * transactions
-    * `retrieve(connectionId, transactionId)`
-    * `list(connectionId)`
+    * `retrieve(connectionId: string, transactionId: string)`
+    * `list(connectionId: string)`
 * institutions
-    * `retrieve(institutionId)`
+    * `retrieve(institutionId: string)`
     * `list()`
+
+### Interfaces
+
+```typescript
+export interface AuthenticationOptions {
+  apiKey: string;
+}
+
+export interface BasiqAPIOptions {
+  baseUrl?: string;
+  auth: AuthenticationOptions;
+}
+
+export interface ConnectionCreateOptions {
+  loginId: string;
+  password: string;
+  securityCode?: string;
+  externalUserId: string;
+  institution: {
+    id: string;
+  };
+}
+
+export interface ConnectionUpdateOptions {
+  loginId?: string;
+  password?: string;
+  securityCode?: string;
+  externalUserId?: string;
+}
+
+export interface BasiqResponse {
+  status: number;
+  statusText: string;
+  body: any;
+  headers?: any;
+}
+```
