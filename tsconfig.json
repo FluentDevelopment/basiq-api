@@ -10,10 +10,13 @@
     "experimentalDecorators": true,
     "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
-    "strict": true,
+    "strict": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "module": "commonjs",
     "typeRoots": [
-      "node_modules/@types"
+      "node_modules/@types",
+      "custom_typings"
     ],
     "lib": [
       "dom",
