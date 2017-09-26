@@ -9,13 +9,6 @@ import { Transaction } from './resources/transactions';
 
 const log = debug('basiq-api');
 
-const resources = {
-  connections: Connection,
-  accounts: Account,
-  transactions: Transaction,
-  institutions: Institution,
-};
-
 export class BasiqAPI {
 
   public accounts: Account;
@@ -30,6 +23,13 @@ export class BasiqAPI {
 
   constructor(options: BasiqAPIOptions) {
     const client = new Client(options);
+
+    const resources = {
+      connections: Connection,
+      accounts: Account,
+      transactions: Transaction,
+      institutions: Institution,
+    };
 
     Object.defineProperty(this, '_client', {
       value: client,
@@ -58,3 +58,4 @@ export {
   BasiqResponse,
   BasiqPromise,
 } from './interfaces';
+
