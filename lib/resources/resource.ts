@@ -2,9 +2,14 @@ import { Client } from '../client';
 import { BasiqPromise } from '../interfaces';
 
 export class Resource {
-  client: Client;
+  protected readonly client: Client;
   constructor(client: Client) {
-    this.client = client;
+    Object.defineProperty(this, 'client', {
+      value: client,
+      writable: false,
+      enumerable: false,
+      configurable: false,
+    });
   }
 
   error(message: string): BasiqPromise {

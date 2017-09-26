@@ -6,6 +6,13 @@ import { Resource } from './resource';
 
 const log = debug('basiq-api:resource:account');
 
+const fetch = (client: Client, connectionId: string, accountId: string = ''): BasiqPromise => {
+  return client
+    .get(`connections/${connectionId}/accounts/${accountId}`)
+    .then(res => client.formatResponse(res))
+    ;
+}
+
 class Account extends Resource {
 
   constructor(client: Client) {
@@ -21,7 +28,7 @@ class Account extends Resource {
       return this.error('Account ID is a required parameter');
     }
 
-    return this.fetch(connectionId, accountId);
+    return fetch(this.client, connectionId, accountId);
   }
 
   list(connectionId: string): BasiqPromise {
@@ -29,14 +36,7 @@ class Account extends Resource {
       return this.error('Connection ID is a required parameter');
     }
 
-    return this.fetch(connectionId);
-  }
-
-  private fetch(connectionId: string, accountId: string = ''): BasiqPromise {
-    return this.client
-      .get(`connections/${connectionId}/accounts/${accountId}`)
-      .then(res => this.client.formatResponse(res))
-      ;
+    return fetch(this.client, connectionId);
   }
 
 }

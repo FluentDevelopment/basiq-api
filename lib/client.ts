@@ -8,35 +8,107 @@ import { BasiqAPIOptions, BasiqResponse, JwtToken } from './interfaces';
 const { name, version, homepage } = require('./../package.json');
 
 const log = debug('basiq-api:client');
-export class Client {
-  private userAgent = `${name.split('/').pop()}/${version} node/${process.version} (${homepage})`;
-  private options: BasiqAPIOptions;
-  private token: JwtToken;
-  private request: axios.AxiosInstance;
-  private DEFAULTS: BasiqAPIOptions = {
-    baseUrl: 'https://au-api.basiq.io',
-    auth: {
-      apiKey: '',
-    },
-  };
-  constructor(options: BasiqAPIOptions) {
-    this.options = Object.assign({}, this.DEFAULTS, options);
 
-    if (!this.options.auth.apiKey.length) {
+const userAgent = `${name.split('/').pop()}/${version} node/${process.version} (${homepage})`;
+let options: BasiqAPIOptions;
+let token: JwtToken;
+let request: axios.AxiosInstance;
+const DEFAULTS: BasiqAPIOptions = {
+  baseUrl: 'https://au-api.basiq.io',
+  auth: {
+    apiKey: '',
+  },
+};
+
+const prependSlash = (url: string = ''): string => {
+  if (url.length && url[0] !== '/') {
+    url = `/${url}`;
+  }
+  return url;
+};
+
+const prepareConfig = async (config?: axios.AxiosRequestConfig): Promise<axios.AxiosRequestConfig> => {
+  await checkToken();
+  return setCommonHeaders(config);
+};
+
+const checkToken = async (): Promise<JwtToken> => {
+  let haveValidToken = false;
+
+  if (token) {
+    const decodedAccessToken: any = decode(token.access_token);
+    const tokenExpiration = new Date(decodedAccessToken.exp * 1000);
+    haveValidToken = (new Date()).getTime() <= tokenExpiration.getTime();
+
+    log('Token valid?', haveValidToken ? 'Yes' : 'No');
+  } else {
+    log('No token');
+  }
+
+
+  if (!haveValidToken) {
+    log('Refreshing token');
+    await authenticate()
+      .then(res => token);
+  } else {
+    return token;
+  }
+};
+
+const authenticate = async (): Promise<axios.AxiosResponse> => {
+  log('Authenticating');
+  const data = {
+    'grant_type': 'client_credentials',
+  };
+
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json',
+    'Authorization': `Basic ${options.auth.apiKey}`,
+  };
+
+  return await request
+    .post(`/oauth2/token`, querystring.stringify(data), { headers })
+    .then(res => {
+      // Save Access Token
+      token = res.data;
+      log('Set token', token);
+      return res;
+    })
+    ;
+};
+
+const setCommonHeaders = async (config?: axios.AxiosRequestConfig): Promise<axios.AxiosRequestConfig> => {
+  await checkToken();
+  log('Setting Headers');
+  const headers = {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json',
+    'Authorization': (token ? `${token.token_type} ${token.access_token}` : ''),
+  };
+  return Object.assign({}, { headers }, config);
+};
+
+export class Client {
+
+  constructor(opts: BasiqAPIOptions) {
+    options = Object.assign({}, DEFAULTS, opts);
+
+    if (!options.auth.apiKey.length) {
       log('API Key not passed to constructor');
       throw new Error('API Key must be passed');
     }
 
-    this.request = axios.default.create({
-      baseURL: this.options.baseUrl,
+    request = axios.default.create({
+      baseURL: options.baseUrl,
       headers: {
-        'User-Agent': this.userAgent,
+        'User-Agent': userAgent,
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
     });
 
-    this.setBaseUrl(this.options.baseUrl);
+    this.setBaseUrl(options.baseUrl);
   }
 
   setBaseUrl(baseUrl: string = ''): Client {
@@ -44,8 +116,8 @@ export class Client {
       baseUrl = baseUrl.replace(/\/$/, '');
     }
 
-    this.options.baseUrl = baseUrl;
-    this.request.defaults.baseURL = this.options.baseUrl;
+    options.baseUrl = baseUrl;
+    request.defaults.baseURL = options.baseUrl;
 
     return this;
   }
@@ -60,100 +132,31 @@ export class Client {
   }
 
   async get(url: string, config?: axios.AxiosRequestConfig): Promise<axios.AxiosResponse> {
-    config = await this.prepareConfig(config);
+    config = await prepareConfig(config);
     log('Prepared Config', config);
-    return await this.request
-      .get(this.prependSlash(url), config)
+    return await request
+      .get(prependSlash(url), config)
       ;
   }
 
   async post(url: string, data?: any, config?: axios.AxiosRequestConfig): Promise<axios.AxiosResponse> {
-    config = await this.prepareConfig(config);
-    return await this.request
-      .post(this.prependSlash(url), data, config)
+    config = await prepareConfig(config);
+    return await request
+      .post(prependSlash(url), data, config)
       ;
   }
 
   async put(url: string, data?: any, config?: axios.AxiosRequestConfig): Promise<axios.AxiosResponse> {
-    config = await this.prepareConfig(config);
-    return await this.request
-      .put(this.prependSlash(url), data, config)
+    config = await prepareConfig(config);
+    return await request
+      .put(prependSlash(url), data, config)
       ;
   }
 
   async delete(url: string, config?: axios.AxiosRequestConfig): Promise<axios.AxiosResponse> {
-    config = await this.prepareConfig(config);
-    return await this.request
-      .delete(this.prependSlash(url), config)
+    config = await prepareConfig(config);
+    return await request
+      .delete(prependSlash(url), config)
       ;
-  }
-
-  private prependSlash(url: string = ''): string {
-    if (url.length && url[0] !== '/') {
-      url = `/${url}`;
-    }
-    return url;
-  }
-
-  private async prepareConfig(config?: axios.AxiosRequestConfig): Promise<axios.AxiosRequestConfig> {
-    await this.checkToken();
-    return this.setCommonHeaders(config);
-  }
-
-  private async checkToken(): Promise<JwtToken> {
-    let haveValidToken = false;
-
-    if (this.token) {
-      const decodedAccessToken: any = decode(this.token.access_token);
-      const tokenExpiration = new Date(decodedAccessToken.exp * 1000);
-      haveValidToken = (new Date()).getTime() <= tokenExpiration.getTime();
-
-      log('Token valid?', haveValidToken ? 'Yes' : 'No');
-    } else {
-      log('No token');
-    }
-
-
-    if (!haveValidToken) {
-      log('Refreshing token');
-      await this.authenticate()
-        .then(res => this.token);
-    } else {
-      return this.token;
-    }
-  }
-
-  private async authenticate(): Promise<axios.AxiosResponse> {
-    log('Authenticating');
-    const data = {
-      'grant_type': 'client_credentials',
-    };
-
-    const headers = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Accept': 'application/json',
-      'Authorization': `Basic ${this.options.auth.apiKey}`,
-    };
-
-    return await this.request
-      .post(`/oauth2/token`, querystring.stringify(data), { headers })
-      .then(res => {
-        // Save Access Token
-        this.token = res.data;
-        log('Set token', this.token);
-        return res;
-      })
-      ;
-  }
-
-  private async setCommonHeaders(config?: axios.AxiosRequestConfig): Promise<axios.AxiosRequestConfig> {
-    const token = await this.checkToken();
-    log('Setting Headers');
-    const headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': (this.token ? `${this.token.token_type} ${this.token.access_token}` : ''),
-    };
-    return Object.assign({}, { headers }, config);
   }
 }
