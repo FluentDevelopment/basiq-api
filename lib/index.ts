@@ -7,6 +7,8 @@ import { Connection } from './resources/connections';
 import { Institution } from './resources/institutions';
 import { Transaction } from './resources/transactions';
 
+const auto = require('autocreate');
+
 const log = debug('basiq-api');
 
 const resources = {
@@ -16,7 +18,7 @@ const resources = {
   institutions: Institution,
 };
 
-class Basiq {
+@auto class Basiq {
 
   public accounts: Account;
 
@@ -29,30 +31,26 @@ class Basiq {
   protected _client: Client;
 
   constructor(options: BasiqAPIOptions) {
-    if (this instanceof Basiq) {
-      const client = new Client(options);
+    const client = new Client(options);
 
-      // log('Adding client', client);
-      Object.defineProperty(this, '_client', {
-        value: client,
-        writable: false,
-        enumerable: false,
-        configurable: false,
-      });
+    // log('Adding client', client);
+    Object.defineProperty(this, '_client', {
+      value: client,
+      writable: false,
+      enumerable: false,
+      configurable: false,
+    });
 
-      Object.keys(resources)
-        .forEach((resource: string) => {
-          // log('Adding property', resource, this);
-          Object.defineProperty(this, resource, {
-            value: new resources[resource](this._client),
-            writable: true,
-            enumerable: false,
-            configurable: true,
-          });
+    Object.keys(resources)
+      .forEach((resource: string) => {
+        // log('Adding property', resource, this);
+        Object.defineProperty(this, resource, {
+          value: new resources[resource](this._client),
+          writable: true,
+          enumerable: false,
+          configurable: true,
         });
-    } else {
-      return new Basiq(options);
-    }
+      });
   }
 
 }
@@ -66,4 +64,4 @@ export {
   BasiqPromise,
 } from './interfaces';
 
-export { Basiq };
+module.exports = Basiq;

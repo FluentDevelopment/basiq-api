@@ -6,9 +6,9 @@
 ## Importing
 
 ```javascript
-var Basiq = require('basiq-api').Basiq;
+var Basiq = require('@fluentdevelopment/basiq-api');
   // OR
-import { Basiq, BasiqAPIOptions } from 'basiq-api';
+import { Basiq, BasiqAPIOptions, BasiqResponse } from '@fluentdevelopment/basiq-api';
 ```
 
 ## Configuration
@@ -26,6 +26,8 @@ const APIOptions = {
 };
 
 var basiq = Basiq(APIOptions);
+  // OR
+var basiq = new Basiq(APIOptions);
 ```
 
 ## API Overview
