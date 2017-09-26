@@ -19,30 +19,30 @@ class Connection extends Resource {
       ;
   }
 
-  refresh(id: string): BasiqPromise {
+  refresh(connectionId: string): BasiqPromise {
     return this.client
-      .post(`connections/${id}/refresh`)
+      .post(`connections/${connectionId}/refresh`)
       .then(res => this.client.formatResponse(res))
       ;
   }
 
-  retrieve(id: string): BasiqPromise {
+  retrieve(connectionId: string): BasiqPromise {
     return this.client
-      .get(`connections/${id}`)
+      .get(`connections/${connectionId}`)
       .then(res => this.client.formatResponse(res))
       ;
   }
 
-  update(id: string, options: ConnectionUpdateOptions): BasiqPromise {
+  update(connectionId: string, options: ConnectionUpdateOptions): BasiqPromise {
     return this.client
-      .put(`connections/${id}`, options)
+      .put(`connections/${connectionId}`, options)
       .then(res => this.client.formatResponse(res))
       ;
   }
 
-  delete(id: string): BasiqPromise {
+  delete(connectionId: string): BasiqPromise {
     return this.client
-      .delete(`connections/${id}`)
+      .delete(`connections/${connectionId}`)
       .then(res => this.client.formatResponse(res))
       ;
   }
