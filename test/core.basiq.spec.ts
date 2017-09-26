@@ -3,25 +3,25 @@ import 'mocha';
 import * as chai from 'chai';
 import * as chaiAsPromised from 'chai-as-promised';
 
-import { Basiq } from '../lib';
+import { BasiqAPI } from '../lib';
 import { Helper } from './helper';
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;
 const assert = chai.assert;
 
-let basiq;
+let basiq: BasiqAPI;
 
 describe('Basiq API', () => {
 
   it('should create', () => {
-    basiq = Basiq(Helper.authOptions);
+    basiq = new BasiqAPI(Helper.authOptions);
     expect(basiq).to.an('object');
   });
 
   describe('Properties', () => {
     beforeEach(done => {
-      basiq = Basiq(Helper.authOptions);
+      basiq = new BasiqAPI(Helper.authOptions);
 
       done();
     });
