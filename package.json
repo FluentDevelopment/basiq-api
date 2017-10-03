@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "prepublish": "npm run build",
-    "prepublishOnly": "npm test",
+    "prepublishOnly": "npm run lint && npm test",
     "prebuild": "npm run clean",
     "build": "tsc",
     "clean": "rimraf ./dist",
