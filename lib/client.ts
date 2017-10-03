@@ -27,9 +27,27 @@ const prependSlash = (url: string = ''): string => {
   return url;
 };
 
-const prepareConfig = async (config?: axios.AxiosRequestConfig): Promise<axios.AxiosRequestConfig> => {
-  await checkToken();
-  return setCommonHeaders(config);
+const authenticate = async (): Promise<axios.AxiosResponse> => {
+  log('Authenticating');
+  const data = {
+    'grant_type': 'client_credentials',
+  };
+
+  const headers = {
+    'Content-Type': 'application/x-www-form-urlencoded',
+    'Accept': 'application/json',
+    'Authorization': `Basic ${options.auth.apiKey}`,
+  };
+
+  return await request
+    .post(`/oauth2/token`, querystring.stringify(data), { headers })
+    .then(res => {
+      // Save Access Token
+      token = res.data;
+      log('Set token', token);
+      return res;
+    })
+    ;
 };
 
 const checkToken = async (): Promise<JwtToken> => {
@@ -55,29 +73,6 @@ const checkToken = async (): Promise<JwtToken> => {
   }
 };
 
-const authenticate = async (): Promise<axios.AxiosResponse> => {
-  log('Authenticating');
-  const data = {
-    'grant_type': 'client_credentials',
-  };
-
-  const headers = {
-    'Content-Type': 'application/x-www-form-urlencoded',
-    'Accept': 'application/json',
-    'Authorization': `Basic ${options.auth.apiKey}`,
-  };
-
-  return await request
-    .post(`/oauth2/token`, querystring.stringify(data), { headers })
-    .then(res => {
-      // Save Access Token
-      token = res.data;
-      log('Set token', token);
-      return res;
-    })
-    ;
-};
-
 const setCommonHeaders = async (config?: axios.AxiosRequestConfig): Promise<axios.AxiosRequestConfig> => {
   await checkToken();
   log('Setting Headers');
@@ -87,6 +82,11 @@ const setCommonHeaders = async (config?: axios.AxiosRequestConfig): Promise<axio
     'Authorization': (token ? `${token.token_type} ${token.access_token}` : ''),
   };
   return Object.assign({}, { headers }, config);
+};
+
+const prepareConfig = async (config?: axios.AxiosRequestConfig): Promise<axios.AxiosRequestConfig> => {
+  await checkToken();
+  return setCommonHeaders(config);
 };
 
 export class Client {

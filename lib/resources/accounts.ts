@@ -11,7 +11,7 @@ const fetch = (client: Client, connectionId: string, accountId: string = ''): Ba
     .get(`connections/${connectionId}/accounts/${accountId}`)
     .then(res => client.formatResponse(res))
     ;
-}
+};
 
 class Account extends Resource {
 
