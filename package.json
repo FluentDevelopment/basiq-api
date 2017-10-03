@@ -16,7 +16,6 @@
   "author": "OpenSource - Fluent Development <opensource@fluentdevelopment.com.au> (https://fluentdevelopment.com.au)",
   "license": "BSD-2-Clause",
   "devDependencies": {
-    "@types/axios": "^0.14.0",
     "@types/chai": "^4.0.4",
     "@types/chai-as-promised": "^7.1.0",
     "@types/debug": "0.0.30",
@@ -24,7 +23,6 @@
     "@types/nock": "^8.2.1",
     "@types/qs": "^6.5.0",
     "@types/rimraf": "^2.0.2",
-    "@types/typescript": "^2.0.0",
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "debug": "^3.0.1",
