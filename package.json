@@ -10,7 +10,8 @@
     "prebuild": "npm run clean",
     "build": "tsc",
     "clean": "rimraf ./dist",
-    "test": "mocha -r ts-node/register test/**/*.spec.ts"
+    "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "lint": "tslint --type-check --project ."
   },
   "author": "OpenSource - Fluent Development <opensource@fluentdevelopment.com.au> (https://fluentdevelopment.com.au)",
   "license": "BSD-2-Clause",
