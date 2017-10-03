@@ -3,7 +3,7 @@ import * as debug from 'debug';
 import { decode } from 'jws';
 import * as querystring from 'qs';
 
-import { BasiqAPIOptions, BasiqResponse, JwtToken } from './interfaces';
+import { BasiqAPIOptions, BasiqResponse, JwtToken, JwtTokenDecoded } from './interfaces';
 
 const { name, version, homepage } = require('./../package.json');
 
@@ -54,7 +54,7 @@ const checkToken = async (): Promise<JwtToken> => {
   let haveValidToken = false;
 
   if (token) {
-    const decodedAccessToken: any = decode(token.access_token);
+    const decodedAccessToken = decode(token.access_token) as JwtTokenDecoded;
     const tokenExpiration = new Date(decodedAccessToken.exp * 1000);
     haveValidToken = (new Date()).getTime() <= tokenExpiration.getTime();
 
