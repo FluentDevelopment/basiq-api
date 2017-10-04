@@ -1,6 +1,6 @@
 {
   "name": "@fluentdevelopment/basiq-api",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "DEPRECATED: A NodeJS wrapper around the Basiq.io API",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
