@@ -19,7 +19,7 @@ The API key can be found on the [API Keys][dashboard] tab in the Basiq.io dashbo
 ## Require
 
 ```javascript
-var BasiqAPI = require('@fluentdevelopment/basiq-api').BasiqAPI;
+var BasiqAPI = require('basiq-api').BasiqAPI;
 
 var apiOptions = {
   baseURL: 'https://au-api.basiq.io', // optional
@@ -34,7 +34,7 @@ var basiq = new BasiqAPI(apiOptions);
 ## Importing
 
 ```javascript
-import { BasiqAPI, BasiqAPIOptions, BasiqResponse } from '@fluentdevelopment/basiq-api';
+import { BasiqAPI, BasiqAPIOptions, BasiqResponse } from 'basiq-api';
 
 const apiOptions: BasiqAPIOptions = {
   baseURL: 'https://au-api.basiq.io', // optional
