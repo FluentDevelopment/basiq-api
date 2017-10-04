@@ -2,7 +2,7 @@
 
 This package is no longer maintained and has been moved to [basiq-api][npmPackage]. It should be installed using `npm install basiq-api`
 
-[npmPackage]: npmjs.com/package/basiq-api
+[npmPackage]: https://npmjs.com/package/basiq-api
 
 ## Basiq.io Node.js bindings
 
