@@ -5,7 +5,7 @@ import * as querystring from 'qs';
 
 import { BasiqAPIOptions, BasiqResponse, JwtToken, JwtTokenDecoded } from './interfaces';
 
-const { name, version, homepage } = require('./../package.json');
+const { name, version, homepage } = require('root-require')('package.json');
 
 const log = debug('basiq-api:client');
 

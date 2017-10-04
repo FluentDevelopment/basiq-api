@@ -36,7 +36,8 @@
   "dependencies": {
     "axios": "^0.16.2",
     "jws": "^3.1.4",
-    "qs": "^6.5.1"
+    "qs": "^6.5.1",
+    "root-require": "^0.3.1"
   },
   "keywords": [
     "basiq",
