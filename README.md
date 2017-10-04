@@ -74,20 +74,20 @@ async function getAccounts(connectionId) {
 ### Available resources and methods
 
 * connections
-    * `create(options: ConnectionCreateOptions)`
-    * `refresh(connectionId: string)`
-    * `retrieve(connectionId: string)`
-    * `update(connectionId: string, options: ConnectionUpdateOptions)`
-    * `delete(connectionId: string)`
+  * `create(options: ConnectionCreateOptions)`
+  * `refresh(connectionId: string)`
+  * `retrieve(connectionId: string)`
+  * `update(connectionId: string, options: ConnectionUpdateOptions)`
+  * `delete(connectionId: string)`
 * accounts
-    * `retrieve(connectionId: string, accountId: string)`
-    * `list(connectionId:string)`
+  * `retrieve(connectionId: string, accountId: string)`
+  * `list(connectionId:string)`
 * transactions
-    * `retrieve(connectionId: string, transactionId: string)`
-    * `list(connectionId: string)`
+  * `retrieve(connectionId: string, transactionId: string)`
+  * `list(connectionId: string)`
 * institutions
-    * `retrieve(institutionId: string)`
-    * `list()`
+  * `retrieve(institutionId: string)`
+  * `list()`
 
 ### Interfaces
 
