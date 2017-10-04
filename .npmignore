@@ -1,4 +1,7 @@
-lib/
-node_modules/
 .vscode/
+.nyc_output
+lib/
+build
+coverage
+node_modules/
 yarn.lock
