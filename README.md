@@ -1,4 +1,11 @@
-# Basiq.io Node.js bindings
+# DEPRECATED
+
+This package is no longer maintained and has been moved to [basiq-api][npmPackage]. It should be installed using `npm install basiq-api`
+
+[npmPackage]: npmjs.com/package/basiq-api
+
+## Basiq.io Node.js bindings
+
 [Basiq.io API][bio-api] bindings for Node.js
 
 [bio-api]: https://basiq.io/api/
