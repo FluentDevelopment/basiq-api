@@ -12,7 +12,7 @@
     "clean": "rimraf ./dist ./build ./coverage",
     "pretest": "tsc test/*.ts --outDir build --module commonjs --sourcemap --lib es2015",
     "test": "nyc mocha build/test/**/*.spec.js",
-    "posttest": "nyc report --reporter=json && codecov -f coverage/*.json",
+    "codecov:publish": "nyc report --exclude build/test/** --reporter=json && codecov -f coverage/*.json",
     "lint": "tslint --type-check --project ."
   },
   "author": "OpenSource - Fluent Development <opensource@fluentdevelopment.com.au> (https://fluentdevelopment.com.au)",
