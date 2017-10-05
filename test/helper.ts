@@ -47,7 +47,7 @@ export class Helper {
     expiryTime.setHours(issuedTime.getHours() + 1);
 
     const signature = sign({
-      header: { alg: 'HS256' },
+      header: { typ: 'JWT', alg: 'HS256' },
       payload: {
         'partnerid': 'par123',
         'applicationid': 'app123',

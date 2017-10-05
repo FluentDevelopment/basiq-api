@@ -14,6 +14,7 @@ export interface JwtToken {
 }
 
 export interface JwtTokenHeader {
+  typ: string;
   alg: string;
 }
 
