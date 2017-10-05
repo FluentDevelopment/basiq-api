@@ -21,7 +21,7 @@ class Institution extends Resource {
 
   retrieve(institutionId: string): BasiqPromise {
     if (!institutionId) {
-      throw new Error('Institution ID is a required parameter');
+      return this.error('Institution ID is a required parameter');
     }
 
     return fetch(this.client, institutionId);

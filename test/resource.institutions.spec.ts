@@ -74,6 +74,10 @@ describe('Institution', () => {
         assert.isFulfilled(resource.retrieve(INSTITUTION_ID)),
       );
 
+      it('should fail if no instituion id passed', () =>
+        assert.isRejected(resource.retrieve(undefined), /Institution\s*ID.*required/i),
+      );
+
     });
 
   });
