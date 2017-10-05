@@ -26,12 +26,17 @@ export class Helper {
   };
 
   public static mockAuthRoute(status: number = 200) {
-    nock(this.baseUrl)
+    const req = nock(this.baseUrl)
       .persist()
       .filteringRequestBody(() => '*')
       .post('/oauth2/token', '*')
-      .reply(status, Helper.getToken(true))
       ;
+
+    if (status >= 200 && status < 300) {
+      req.reply(status, Helper.getToken(true));
+    } else {
+      req.replyWithError({ message: 'Something bad happened', code: status });
+    }
   }
 
   public static getToken(valid: boolean): any {
