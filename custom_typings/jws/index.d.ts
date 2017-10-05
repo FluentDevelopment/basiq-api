@@ -1,4 +1,4 @@
 declare module 'jws' {
-  export function decode(token: string): any;
-  export function sign(payload: any): string;
+  export function decode(token: string, options?: any): any;
+  export function sign(opts: any): string;
 }
