@@ -51,8 +51,8 @@ export class Helper {
       payload: {
         'partnerid': 'par123',
         'applicationid': 'app123',
-        'exp': expiryTime.getTime() / 1000,
-        'iat': issuedTime.getTime() / 1000,
+        'exp': Math.floor(expiryTime.getTime() / 1000),
+        'iat': Math.floor(issuedTime.getTime() / 1000),
         'version': '2017-09-04',
       },
       secret: 'super secret key',
