@@ -1,6 +1,7 @@
 # Basiq.io Node.js bindings
 
 [![Travis CI Build Status](https://travis-ci.org/FluentDevelopment/basiq-api.svg?branch=master)](https://travis-ci.org/FluentDevelopment/basiq-api)
+[![codecov Code Coverage](https://codecov.io/gh/FluentDevelopment/basiq-api/branch/master/graph/badge.svg)](https://codecov.io/gh/FluentDevelopment/basiq-api)
 
 [Basiq.io API][bio-api] bindings for Node.js
 
