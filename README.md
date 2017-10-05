@@ -1,3 +1,5 @@
+[![Package Stats](https://nodei.co/npm/basiq-api.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/basiq-api)
+
 # Basiq.io Node.js bindings
 
 [![Travis CI Build Status](https://travis-ci.org/FluentDevelopment/basiq-api.svg?branch=master)](https://travis-ci.org/FluentDevelopment/basiq-api)
