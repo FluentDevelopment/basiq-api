@@ -4,6 +4,7 @@
 [![codecov Code Coverage](https://codecov.io/gh/FluentDevelopment/basiq-api/branch/master/graph/badge.svg)](https://codecov.io/gh/FluentDevelopment/basiq-api)
 [![dependencies Status](https://david-dm.org/fluentdevelopment/basiq-api/status.svg)](https://david-dm.org/fluentdevelopment/basiq-api)
 [![devDependencies Status](https://david-dm.org/fluentdevelopment/basiq-api/dev-status.svg)](https://david-dm.org/fluentdevelopment/basiq-api?type=dev)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FFluentDevelopment%2Fbasiq-api.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FFluentDevelopment%2Fbasiq-api?ref=badge_shield)
 
 [Basiq.io API][bio-api] bindings for Node.js
 
@@ -124,3 +125,7 @@ export interface BasiqResponse {
   headers?: any;
 }
 ```
+
+#### 3rd-Party Software License
+
+https://app.fossa.io/reports/ef013f3f-50fe-4268-b2c7-7aa7ca0c26d3
