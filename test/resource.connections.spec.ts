@@ -15,7 +15,7 @@ const assert = chai.assert;
 
 const CONNECTION_ID = '1';
 
-const client: Client = new Client(Helper.authOptions);
+const client: Client = new Client(Helper.authOptions.valid);
 let resource: Connection;
 
 describe('Connection', () => {

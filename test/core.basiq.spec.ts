@@ -15,13 +15,13 @@ let basiq: BasiqAPI;
 describe('Basiq API', () => {
 
   it('should create', () => {
-    basiq = new BasiqAPI(Helper.authOptions);
+    basiq = new BasiqAPI(Helper.authOptions.valid);
     expect(basiq).to.an('object');
   });
 
   describe('Properties', () => {
     beforeEach(done => {
-      basiq = new BasiqAPI(Helper.authOptions);
+      basiq = new BasiqAPI(Helper.authOptions.valid);
 
       done();
     });

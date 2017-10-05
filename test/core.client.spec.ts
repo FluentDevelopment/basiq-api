@@ -16,14 +16,18 @@ let client: Client;
 describe('Client', () => {
 
   beforeEach(done => {
-    client = new Client(Helper.authOptions);
+    client = new Client(Helper.authOptions.valid);
 
     done();
   });
 
   it('should create', () => {
-    client = new Client(Helper.authOptions);
+    client = new Client(Helper.authOptions.valid);
     expect(client).to.an('object');
+  });
+
+  it('should not create with empty API Key', () => {
+    expect(() => new Client(Helper.authOptions.invalid)).to.throw(/API.*Key/);
   });
 
   describe('Valid Token', () => {
@@ -41,6 +45,12 @@ describe('Client', () => {
     });
 
     it('should respond', () => assert.isFulfilled(client.get('/')));
+
+    it('should remove trailing slash from base URL', () => {
+      client = new Client(Helper.authOptions.baseUrlWithSlash);
+      expect(client).to.an('object');
+      assert.isFulfilled(client.get('/'));
+    });
 
   });
 

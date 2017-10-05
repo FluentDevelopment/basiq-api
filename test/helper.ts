@@ -2,13 +2,27 @@ import { sign } from 'jws';
 import * as nock from 'nock';
 
 import { ConnectionUpdateOptions } from '../dist/interfaces';
-import { BasiqAPIOptions, ConnectionCreateOptions } from '../lib/';
+import { ConnectionCreateOptions } from '../lib/';
 
 export class Helper {
   public static baseUrl = 'https://au-api.basiq.io';
 
-  public static authOptions: BasiqAPIOptions = {
-    auth: { apiKey: 'abc' },
+
+  public static authOptions = {
+    valid: {
+      auth: { apiKey: 'abc' },
+    },
+    invalid: {
+      auth: { apiKey: '' },
+    },
+    baseUrlWithSlash: {
+      baseUrl: 'https://au-api.basiq.io/',
+      auth: { apiKey: 'abc' },
+    },
+    baseUrlEmpty: {
+      baseUrl: '',
+      auth: { apiKey: 'abc' },
+    },
   };
 
   public static connectionCreateOptions: ConnectionCreateOptions = {
