@@ -36,15 +36,14 @@ export interface ConnectionCreateOptions {
   loginId: string;
   password: string;
   securityCode?: string;
-  externalUserId: string;
+  externalUserId?: string;
   institution: {
     id: string;
   };
 }
 
 export interface ConnectionUpdateOptions {
-  loginId?: string;
-  password?: string;
+  password: string;
   securityCode?: string;
   externalUserId?: string;
 }
