@@ -13,12 +13,22 @@ export interface JwtToken {
   expires_in: number;
 }
 
-export interface JwtTokenDecoded {
+export interface JwtTokenHeader {
+  alg: string;
+}
+
+export interface JwtTokenPayload {
   partnerid: string;
   applicationid: string;
   exp: number;
   iat: number;
   version: string;
+}
+
+export interface JwtTokenDecoded {
+  header: JwtTokenHeader;
+  payload: JwtTokenPayload;
+  signature: string;
 }
 
 export interface ConnectionCreateOptions {

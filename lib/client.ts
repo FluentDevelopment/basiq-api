@@ -55,7 +55,7 @@ const checkToken = async (): Promise<JwtToken> => {
 
   if (token) {
     const decodedAccessToken = decode(token.access_token) as JwtTokenDecoded;
-    const tokenExpiration = new Date(decodedAccessToken.exp * 1000);
+    const tokenExpiration = new Date(decodedAccessToken.payload.exp * 1000);
     haveValidToken = (new Date()).getTime() <= tokenExpiration.getTime();
 
     log('Token valid?', haveValidToken ? 'Yes' : 'No');

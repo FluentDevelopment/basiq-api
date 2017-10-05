@@ -42,13 +42,17 @@ export class Helper {
       issuedTime.setDate(issuedTime.getDate() - 2);
     }
 
+    // Make token expire 1 hour after issue
+    const expiryTime = new Date(issuedTime);
+    expiryTime.setHours(issuedTime.getHours() + 1);
+
     const signature = sign({
       header: { alg: 'HS256' },
       payload: {
         'partnerid': 'par123',
         'applicationid': 'app123',
-        'exp': issuedTime.getTime(),
-        'iat': issuedTime.getTime(),
+        'exp': expiryTime.getTime() / 1000,
+        'iat': issuedTime.getTime() / 1000,
         'version': '2017-09-04',
       },
       secret: 'super secret key',
