@@ -7,6 +7,7 @@
 [![dependencies Status](https://david-dm.org/fluentdevelopment/basiq-api/status.svg)](https://david-dm.org/fluentdevelopment/basiq-api)
 [![devDependencies Status](https://david-dm.org/fluentdevelopment/basiq-api/dev-status.svg)](https://david-dm.org/fluentdevelopment/basiq-api?type=dev)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FFluentDevelopment%2Fbasiq-api.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FFluentDevelopment%2Fbasiq-api?ref=badge_shield)
+[![license](https://img.shields.io/github/license/fluentdevelopment/basiq-api.svg)](https://github.com/FluentDevelopment/basiq-api/blob/master/LICENSE)
 
 [Basiq.io API][bio-api] bindings for Node.js
 
