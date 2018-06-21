@@ -20,12 +20,10 @@ let resource: Transaction;
 
 describe('Transaction', () => {
 
-  beforeEach(done => {
+  beforeEach(() => {
     nock.cleanAll();
 
     Helper.mockAuthRoute();
-
-    done();
   });
 
   it('should create', () => {
@@ -35,63 +33,66 @@ describe('Transaction', () => {
 
   describe('Methods', () => {
 
-    beforeEach(done => {
+    beforeEach(() => {
       resource = new Transaction(client);
-      done();
     });
 
     describe('List', () => {
+      let transactionsEndpoint: nock.Scope;
 
-      beforeEach(done => {
-        nock(Helper.baseUrl)
-          .persist()
+      beforeEach(() => {
+        transactionsEndpoint = nock(Helper.baseUrl)
           .get(`/connections/${CONNECTION_ID}/transactions`)
           .reply(200, { accounts: [] })
           ;
-
-        done();
       });
 
-      it('should list', () =>
-        assert.isFulfilled(resource.list(CONNECTION_ID)),
-      );
+      it('should list', async () => {
+        await assert.isFulfilled(resource.list(CONNECTION_ID));
+        assert.isTrue(transactionsEndpoint.isDone());
+      });
 
-      it('should throw error if Connection ID is not passed', () =>
-        assert.isRejected(resource.list(undefined), /Connection ID/),
-      );
+      it('should throw error if Connection ID is not passed', async () => {
+        await assert.isRejected(resource.list(undefined), /Connection ID/);
+        assert.isFalse(transactionsEndpoint.isDone());
+      });
 
     });
 
     describe('Retrieve', () => {
+      let transactionListEndpoint: nock.Scope;
+      let transactionRetrieveEndpoint: nock.Scope;
 
-      beforeEach(done => {
+      beforeEach(() => {
 
-        nock(Helper.baseUrl)
-          .persist()
+        transactionListEndpoint = nock(Helper.baseUrl)
           .get(`/connections/${CONNECTION_ID}/transactions/`)
           .reply(200, { accounts: [] })
           ;
 
-        nock(Helper.baseUrl)
-          .persist()
+        transactionRetrieveEndpoint = nock(Helper.baseUrl)
           .get(`/connections/${CONNECTION_ID}/transactions/${TRANSACTION_ID}`)
           .reply(200, { id: TRANSACTION_ID })
           ;
-
-        done();
       });
 
-      it('should retrieve', () =>
-        assert.isFulfilled(resource.retrieve(CONNECTION_ID, TRANSACTION_ID)),
-      );
+      it('should retrieve', async () => {
+        await assert.isFulfilled(resource.retrieve(CONNECTION_ID, TRANSACTION_ID));
+        assert.isTrue(transactionRetrieveEndpoint.isDone());
+        assert.isFalse(transactionListEndpoint.isDone());
+      });
 
-      it('should throw error if Connection ID is not passed', () =>
-        assert.isRejected(resource.retrieve(undefined, undefined), /Connection ID/),
-      );
+      it('should throw error if Connection ID is not passed', async () => {
+        await assert.isRejected(resource.retrieve(undefined, undefined), /Connection ID/);
+        assert.isFalse(transactionRetrieveEndpoint.isDone());
+        assert.isFalse(transactionListEndpoint.isDone());
+      });
 
-      it('should throw error if Transaction ID is not passed', () =>
-        assert.isRejected(resource.retrieve(CONNECTION_ID, undefined), /Transaction ID/),
-      );
+      it('should throw error if Transaction ID is not passed', async () => {
+        await assert.isRejected(resource.retrieve(CONNECTION_ID, undefined), /Transaction ID/);
+        assert.isFalse(transactionRetrieveEndpoint.isDone());
+        assert.isFalse(transactionListEndpoint.isDone());
+      });
 
     });
 
