@@ -15,10 +15,8 @@ let client: Client;
 
 describe('Client', () => {
 
-  beforeEach(done => {
+  beforeEach(() => {
     client = new Client(Helper.authOptions.valid);
-
-    done();
   });
 
   it('should create', () => {
@@ -32,7 +30,7 @@ describe('Client', () => {
 
   describe('Valid Token', () => {
 
-    beforeEach(done => {
+    beforeEach(() => {
       nock.cleanAll();
 
       Helper.mockAuthRoute();
@@ -40,35 +38,59 @@ describe('Client', () => {
       nock(Helper.baseUrl)
         .get('/')
         .reply(200, {});
-
-      done();
     });
 
-    it('should respond', () => assert.isFulfilled(client.get('/')));
+    it('should respond', () => assert.isFulfilled(client.get('/'))
+      .then(() => assert.isTrue(nock.isDone())),
+    );
 
     it('should remove trailing slash from base URL', () => {
       client = new Client(Helper.authOptions.baseUrlWithSlash);
       expect(client).to.an('object');
-      assert.isFulfilled(client.get('/'));
+      return assert.isFulfilled(client.get('/'))
+        .then(() => assert.isTrue(nock.isDone()));
     });
 
   });
 
-  describe('Authentication Error', () => {
-
-    beforeEach(done => {
+  describe('Invalid token', () => {
+    let auth;
+    beforeEach(() => {
       nock.cleanAll();
 
-      Helper.mockAuthRoute(403);
+      (client as any).token = Helper.getToken(false);
 
-      nock(Helper.baseUrl)
+      Helper.mockAuthRoute(200);
+
+      auth = nock(Helper.baseUrl)
         .get('/')
         .reply(200, {});
-
-      done();
     });
 
-    it('should not respond', () => assert.isRejected(client.get('/')));
+    it('Should attempt to re-authenticate', () => {
+      return assert.isFulfilled(client.get('/'))
+        .then(() => assert.isTrue(auth.isDone()));
+    });
+  });
+
+  describe('Authentication Error', () => {
+    let auth, root;
+    beforeEach(() => {
+      nock.cleanAll();
+
+      auth = Helper.mockAuthRoute(403);
+
+      root = nock(Helper.baseUrl)
+        .get('/')
+        .reply(200, {});
+    });
+
+    it('should not respond', () => assert.isRejected(client.get('/'))
+      .then(() => {
+        assert.isTrue(auth.isDone());
+        assert.isFalse(root.isDone());
+      }),
+    );
 
   });
 

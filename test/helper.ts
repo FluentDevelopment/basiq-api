@@ -47,9 +47,9 @@ export class Helper {
       ;
 
     if (status >= 200 && status < 300) {
-      req.reply(status, Helper.getToken(true));
+      return req.reply(status, Helper.getToken(true));
     } else {
-      req.replyWithError({ message: 'Something bad happened', code: status });
+      return req.replyWithError({ message: 'Something bad happened', code: status });
     }
   }
 
