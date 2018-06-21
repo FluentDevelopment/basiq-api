@@ -42,17 +42,6 @@ export class Client {
     this.setBaseUrl(this.options.baseUrl);
   }
 
-  setBaseUrl(baseUrl: string = ''): Client {
-    if (baseUrl.length && baseUrl.slice(-1) === '/') {
-      baseUrl = baseUrl.replace(/\/$/, '');
-    }
-
-    this.options.baseUrl = baseUrl;
-    this.request.defaults.baseURL = this.options.baseUrl;
-
-    return this;
-  }
-
   formatResponse(res: axios.AxiosResponse): BasiqResponse {
     return {
       status: res.status,
@@ -89,6 +78,17 @@ export class Client {
     return await this.request
       .delete(this.prependSlash(url), config)
       ;
+  }
+
+  private setBaseUrl(baseUrl: string): Client {
+    if (baseUrl.length && baseUrl.slice(-1) === '/') {
+      baseUrl = baseUrl.replace(/\/$/, '');
+    }
+
+    this.options.baseUrl = baseUrl;
+    this.request.defaults.baseURL = this.options.baseUrl;
+
+    return this;
   }
 
   private prependSlash(url: string = ''): string {
