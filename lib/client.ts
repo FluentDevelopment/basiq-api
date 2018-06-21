@@ -91,7 +91,7 @@ export class Client {
     return this;
   }
 
-  private prependSlash(url: string = ''): string {
+  private prependSlash(url: string): string {
     if (url.length && url[0] !== '/') {
       url = `/${url}`;
     }
@@ -135,6 +135,7 @@ export class Client {
     if (!haveValidToken) {
       log('Refreshing token');
       await this.authenticate();
+      return this.token;
     } else {
       return this.token;
     }
@@ -146,7 +147,7 @@ export class Client {
     const headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
-      'Authorization': (this.token ? `${this.token.token_type} ${this.token.access_token}` : ''),
+      'Authorization': `${this.token.token_type} ${this.token.access_token}`,
     };
     return Object.assign({}, { headers }, config);
   }
