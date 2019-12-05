@@ -110,15 +110,12 @@ export class Client {
       'Authorization': `Basic ${this.options.auth.apiKey}`,
     };
 
-    return await this.request
-      .post(`/oauth2/token`, querystring.stringify(data), { headers })
-      .then(res => {
-        // Save Access Token
-        this.token = res.data;
-        log('Set this.', this.token);
-        return res;
-      })
-      ;
+    const res = await this.request
+      .post(`/oauth2/token`, querystring.stringify(data), { headers });
+    // Save Access Token
+    this.token = res.data;
+    log('Set this.', this.token);
+    return res;
   }
 
   private async checkToken(): Promise<JwtToken> {
@@ -137,8 +134,7 @@ export class Client {
 
     if (!haveValidToken) {
       log('Refreshing token');
-      await this.authenticate()
-        .then(res => this.token);
+      await this.authenticate();
     } else {
       return this.token;
     }

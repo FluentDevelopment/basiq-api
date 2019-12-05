@@ -5,11 +5,10 @@ import { Resource } from './resource';
 
 const log = debug('basiq-api:resource:account');
 
-const fetch = (client: Client, connectionId: string, accountId: string = '') => {
-  return client
-    .get(`connections/${connectionId}/accounts/${accountId}`)
-    .then(res => client.formatResponse(res))
-    ;
+const fetch = async (client: Client, connectionId: string, accountId: string = '') => {
+  const res = await client
+    .get(`connections/${connectionId}/accounts/${accountId}`);
+  return client.formatResponse(res);
 };
 
 class Account extends Resource {

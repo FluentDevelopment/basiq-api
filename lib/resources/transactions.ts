@@ -5,11 +5,10 @@ import { Resource } from './resource';
 
 const log = debug('basiq-api:resource:transaction');
 
-const fetch = (client: Client, connectionId: string, transactionId: string = '') => {
-  return client
-    .get(`connections/${connectionId}/transactions/${transactionId}`)
-    .then(res => client.formatResponse(res))
-    ;
+const fetch = async (client: Client, connectionId: string, transactionId: string = '') => {
+  const res = await client
+    .get(`connections/${connectionId}/transactions/${transactionId}`);
+  return client.formatResponse(res);
 };
 
 class Transaction extends Resource {

@@ -12,39 +12,34 @@ class Connection extends Resource {
     super(client);
   }
 
-  create(options: ConnectionCreateOptions) {
-    return this.client
-      .post('connections', options)
-      .then(res => this.client.formatResponse(res))
-      ;
+  async create(options: ConnectionCreateOptions) {
+    const res = await this.client
+      .post('connections', options);
+    return this.client.formatResponse(res);
   }
 
-  refresh(connectionId: string) {
-    return this.client
-      .post(`connections/${connectionId}/refresh`)
-      .then(res => this.client.formatResponse(res))
-      ;
+  async refresh(connectionId: string) {
+    const res = await this.client
+      .post(`connections/${connectionId}/refresh`);
+    return this.client.formatResponse(res);
   }
 
-  retrieve(connectionId: string) {
-    return this.client
-      .get(`connections/${connectionId}`)
-      .then(res => this.client.formatResponse(res))
-      ;
+  async retrieve(connectionId: string) {
+    const res = await this.client
+      .get(`connections/${connectionId}`);
+    return this.client.formatResponse(res);
   }
 
-  update(connectionId: string, options: ConnectionUpdateOptions) {
-    return this.client
-      .put(`connections/${connectionId}`, options)
-      .then(res => this.client.formatResponse(res))
-      ;
+  async update(connectionId: string, options: ConnectionUpdateOptions) {
+    const res = await this.client
+      .put(`connections/${connectionId}`, options);
+    return this.client.formatResponse(res);
   }
 
-  delete(connectionId: string) {
-    return this.client
-      .delete(`connections/${connectionId}`)
-      .then(res => this.client.formatResponse(res))
-      ;
+  async delete(connectionId: string) {
+    const res = await this.client
+      .delete(`connections/${connectionId}`);
+    return this.client.formatResponse(res);
   }
 
 }

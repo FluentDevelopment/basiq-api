@@ -5,11 +5,10 @@ import { Resource } from './resource';
 
 const log = debug('basiq-api:resource:institution');
 
-const fetch = (client: Client, institutionId: string = '') => {
-  return client
+const fetch = async (client: Client, institutionId: string = '') => {
+  const res = await client
     .get(`institutions/${institutionId}`)
-    .then(res => client.formatResponse(res))
-    ;
+  return client.formatResponse(res);
 };
 
 class Institution extends Resource {
