@@ -54,5 +54,3 @@ export interface BasiqResponse {
   body: any;
   headers?: any;
 }
-
-export type BasiqPromise = Promise<BasiqResponse>;

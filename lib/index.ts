@@ -56,6 +56,5 @@ export {
   ConnectionCreateOptions,
   ConnectionUpdateOptions,
   BasiqResponse,
-  BasiqPromise,
 } from './interfaces';
 

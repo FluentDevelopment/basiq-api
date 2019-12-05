@@ -1,12 +1,11 @@
 import * as debug from 'debug';
 
 import { Client } from '../client';
-import { BasiqPromise } from '../interfaces';
 import { Resource } from './resource';
 
 const log = debug('basiq-api:resource:account');
 
-const fetch = (client: Client, connectionId: string, accountId: string = ''): BasiqPromise => {
+const fetch = (client: Client, connectionId: string, accountId: string = '') => {
   return client
     .get(`connections/${connectionId}/accounts/${accountId}`)
     .then(res => client.formatResponse(res))
@@ -19,7 +18,7 @@ class Account extends Resource {
     super(client);
   }
 
-  retrieve(connectionId: string, accountId: string): BasiqPromise {
+  retrieve(connectionId: string, accountId: string) {
     if (!connectionId) {
       return this.error('Connection ID is a required parameter');
     }
@@ -31,7 +30,7 @@ class Account extends Resource {
     return fetch(this.client, connectionId, accountId);
   }
 
-  list(connectionId: string): BasiqPromise {
+  list(connectionId: string) {
     if (!connectionId) {
       return this.error('Connection ID is a required parameter');
     }

@@ -1,12 +1,11 @@
 import * as debug from 'debug';
 
 import { Client } from '../client';
-import { BasiqPromise } from '../interfaces';
 import { Resource } from './resource';
 
 const log = debug('basiq-api:resource:institution');
 
-const fetch = (client: Client, institutionId: string = ''): BasiqPromise => {
+const fetch = (client: Client, institutionId: string = '') => {
   return client
     .get(`institutions/${institutionId}`)
     .then(res => client.formatResponse(res))
@@ -19,7 +18,7 @@ class Institution extends Resource {
     super(client);
   }
 
-  retrieve(institutionId: string): BasiqPromise {
+  retrieve(institutionId: string) {
     if (!institutionId) {
       return this.error('Institution ID is a required parameter');
     }
@@ -27,7 +26,7 @@ class Institution extends Resource {
     return fetch(this.client, institutionId);
   }
 
-  list(): BasiqPromise {
+  list() {
     return fetch(this.client);
   }
 

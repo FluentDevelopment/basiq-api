@@ -1,5 +1,5 @@
 import { Client } from '../client';
-import { BasiqPromise } from '../interfaces';
+import { BasiqResponse } from '../interfaces';
 
 export class Resource {
   protected readonly client: Client;
@@ -12,7 +12,7 @@ export class Resource {
     });
   }
 
-  error(message: string): BasiqPromise {
-    return new Promise((resolve, reject) => reject(message));
+  error(message: string) {
+    return new Promise<BasiqResponse>((resolve, reject) => reject(message));
   }
 }
