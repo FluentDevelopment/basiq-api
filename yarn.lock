@@ -125,6 +125,13 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
+"@types/jws@^3.2.1":
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/@types/jws/-/jws-3.2.1.tgz#60957118756f881ac24f9f01044cbae09c286b0a"
+  integrity sha512-Wninf85BwMG0K9BpO1RnZJQ+0dydtYo+V4DfBCQVUEuo82dK/ABi0VvhLAQVi/K6PPNzd5lHCij5LmYt1ptUjw==
+  dependencies:
+    "@types/node" "*"
+
 "@types/minimatch@*":
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
