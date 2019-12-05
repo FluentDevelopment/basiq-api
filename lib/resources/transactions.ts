@@ -5,9 +5,9 @@ import { Resource } from './resource';
 
 const log = debug('basiq-api:resource:transaction');
 
-const fetch = async (client: Client, connectionId: string, transactionId: string = '') => {
-  const res = await client
-    .get(`connections/${connectionId}/transactions/${transactionId}`);
+const fetch = async (client: Client, connectionId: string, ...extraPaths: string[]) => {
+  const url = ['connections', connectionId, 'transactions', ...extraPaths].join('/');
+  const res = await client.get(url);
   return client.formatResponse(res);
 };
 

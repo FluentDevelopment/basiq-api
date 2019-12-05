@@ -1,3 +1,4 @@
+import { AxiosResponse } from 'axios';
 import * as debug from 'debug';
 
 import { Client } from '../client';
@@ -6,40 +7,38 @@ import { Resource } from './resource';
 
 const log = debug('basiq-api:resource:connection');
 
+type ActionFunction = (client: Client, path: string) => Promise<AxiosResponse>;
+
+const fetch = async (client: Client, action: ActionFunction, ...extraPaths: string[]) => {
+  const url = ['connections', ...extraPaths].join('/');
+  const res = await action(client, url);
+  return client.formatResponse(res);
+};
+
 class Connection extends Resource {
 
   constructor(client: Client) {
     super(client);
   }
 
-  async create(options: ConnectionCreateOptions) {
-    const res = await this.client
-      .post('connections', options);
-    return this.client.formatResponse(res);
+  create(options: ConnectionCreateOptions) {
+    return fetch(this.client, (c, p) => c.post(p, options));
   }
 
-  async refresh(connectionId: string) {
-    const res = await this.client
-      .post(`connections/${connectionId}/refresh`);
-    return this.client.formatResponse(res);
+  refresh(connectionId: string) {
+    return fetch(this.client, (c, p) => c.post(p), connectionId, 'refresh');
   }
 
-  async retrieve(connectionId: string) {
-    const res = await this.client
-      .get(`connections/${connectionId}`);
-    return this.client.formatResponse(res);
+  retrieve(connectionId: string) {
+    return fetch(this.client, (c, p) => c.get(p), connectionId);
   }
 
-  async update(connectionId: string, options: ConnectionUpdateOptions) {
-    const res = await this.client
-      .put(`connections/${connectionId}`, options);
-    return this.client.formatResponse(res);
+  update(connectionId: string, options: ConnectionUpdateOptions) {
+    return fetch(this.client, (c, p) => c.put(p, options), connectionId);
   }
 
-  async delete(connectionId: string) {
-    const res = await this.client
-      .delete(`connections/${connectionId}`);
-    return this.client.formatResponse(res);
+  delete(connectionId: string) {
+    return fetch(this.client, (c, p) => c.delete(p), connectionId);
   }
 
 }

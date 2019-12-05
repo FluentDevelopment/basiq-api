@@ -45,7 +45,7 @@ describe('Transaction', () => {
       beforeEach(done => {
         nock(Helper.baseUrl)
           .persist()
-          .get(`/connections/${CONNECTION_ID}/transactions/`)
+          .get(`/connections/${CONNECTION_ID}/transactions`)
           .reply(200, { accounts: [] })
           ;
 

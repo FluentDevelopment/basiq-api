@@ -45,7 +45,7 @@ describe('Institution', () => {
       beforeEach(done => {
         nock(Helper.baseUrl)
           .persist()
-          .get(`/institutions/`)
+          .get(`/institutions`)
           .reply(200, {})
           ;
 
