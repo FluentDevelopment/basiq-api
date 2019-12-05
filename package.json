@@ -46,13 +46,6 @@
     "qs": "^6.5.1",
     "root-require": "^0.3.1"
   },
-  "nyc": {
-    "extends": "@istanbuljs/nyc-config-typescript",
-    "check-coverage": true,
-    "exclude": [
-      "build/test/**"
-    ]
-  },
   "keywords": [
     "basiq",
     "basiq.io",
